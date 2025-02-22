@@ -51,15 +51,25 @@ const App = () => {
   // Fetch predictions
   const fetchPredictions = async (comments) => {
     try {
-      const response = await axios.post("http://localhost:5000/predict", {
-        comments,
-      });
-      return response.data.predictions;
+        const response = await axios.post(
+            "https://server-flask-7xv9.onrender.com/predict", 
+            { comments }, 
+            {
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                withCredentials: false // Ensure CORS is properly handled
+            }
+        );
+        return response.data.predictions;
     } catch (err) {
-      console.error("Error fetching predictions:", err);
-      throw err;
+        console.error("Error fetching predictions:", err);
+        throw err;
     }
-  };
+};
+
+  
 
   // Handle form submission
   const handleSubmit = async (e) => {
